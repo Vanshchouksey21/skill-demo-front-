@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [data , setData] =  useState({
     email:"",
     password:""
@@ -15,10 +18,22 @@ const Login = () => {
     })
     console.log(data);
   }
-  const hs = (e) =>{
+  const hs = async(e) =>{
   e.preventDefault(); 
     alert(data);
-    console.log(data);
+    try {
+      const api = "http://localhost:1056/login"
+      const res = await axios.post(api , data);
+      console.log("RESponse" , res.data);
+      if(res.data.success){
+        alert("Login sucessful")
+        navigate("/")
+      }
+      
+    } catch (error) {
+      
+    }
+    
     
   }
   return (

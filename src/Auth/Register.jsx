@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import axios from "axios"
+import {useNavigate} from "react-router-dom"
 
 const Register = () => {
+  const navigate = useNavigate();
   const [user , setUser] = useState({
     username:"",
     email:"",
@@ -16,15 +19,27 @@ const Register = () => {
       ...user,
       [name]:value,
     })
-    // console.log(user);
+  
 
   }
   const hs = async (e) => {
   e.preventDefault();   
-  alert(user);       
+       
   console.log(user);
-     
-};
+ try {
+ const api = "http://localhost:1056/registration";
+ const res = await axios.post(api , user);
+ console.log("Response " ,res.data);
+
+ if(res.data.success){
+  navigate("/login")
+ }
+
+} catch (error) {
+ console.error("Error:", error.response ? error.response.data : error.message);
+
+}
+}
 
   return (
     <>
@@ -49,7 +64,7 @@ const Register = () => {
                                       onChange={hi} />
 
                                       <label htmlFor="email">email</label>
-                                    <input type="text" name='email'
+                                    <input type="email" name='email'
                                     value={user.email}
                                      placeholder='Enter your emaile' 
                                      id='email'
@@ -57,7 +72,7 @@ const Register = () => {
                                       onChange={hi} />
 
                                       <label htmlFor="phone">phone</label>
-                                    <input type="text" name='phone'
+                                    <input type="number" name='phone'
                                     value={user.phone}
                                      placeholder='Enter your phone' 
                                      id='phone'
@@ -65,7 +80,7 @@ const Register = () => {
                                       onChange={hi}  />
 
                                       <label htmlFor="password">password</label>
-                                    <input type="text" name='password'
+                                    <input type="password" name='password'
                                     value={user.password}
                                      placeholder='Enter your password' 
                                      id='password'
