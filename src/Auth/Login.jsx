@@ -16,7 +16,7 @@ const Login = () => {
       ...data,
       [name]:value
     })
-    console.log(data);
+    // console.log(data);
   }
   const hs = async(e) =>{
   e.preventDefault(); 
