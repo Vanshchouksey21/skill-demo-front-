@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import {useNavigate} from "react-router-dom"
+import { useAuth } from '../Store/Auth';
+
 
 const Register = () => {
   const navigate = useNavigate();
+  const   {StoreToken} = useAuth();
   const [user , setUser] = useState({
     username:"",
     email:"",
@@ -32,6 +35,10 @@ const Register = () => {
  console.log("Response " ,res.data);
 
  if(res.data.success){
+  StoreToken(res.data.token)
+  
+  
+  alert("Registration sucess full " , res.data.username)
   navigate("/login")
  }
 

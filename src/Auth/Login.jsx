@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Store/Auth';
 
 const Login = () => {
   const navigate = useNavigate();
+  const {StoreToken} = useAuth();
   const [data , setData] =  useState({
     email:"",
     password:""
@@ -20,13 +22,16 @@ const Login = () => {
   }
   const hs = async(e) =>{
   e.preventDefault(); 
-    alert(data);
+    
     try {
       const api = "http://localhost:1056/login"
       const res = await axios.post(api , data);
       console.log("RESponse" , res.data);
+
+
       if(res.data.success){
-        alert("Login sucessful")
+          StoreToken(res.data.token);
+  alert("Login sucess full " , res.data.username)
         navigate("/")
       }
       
@@ -49,13 +54,13 @@ const Login = () => {
       name='email'
        required 
        placeholder='Enter your email' 
-      id='name' 
+      id='email' 
       value={data.email} 
       onChange={hi}/>
 
 
       <label htmlFor="password">password</label>
-      <input type="text" 
+      <input type="password" 
       name='password'
        required 
        placeholder='Enter your password' 
