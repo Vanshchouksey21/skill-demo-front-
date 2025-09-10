@@ -1,12 +1,25 @@
 import React from 'react'
 import { useState } from 'react'
+import { useAuth } from '../Store/Auth';
+import axios from 'axios';
 
 const Contact = () => {
+  const {user} = useAuth();
   const [formdata , setFormdata] = useState({
     username:"",
     email:"",
     message:""
   });
+  const [userdata , setUserdata] = useState(true)
+
+  if(user && userdata ){
+    setFormdata( {
+      username : user.username,
+      email : user.email
+    })
+    setUserdata(false)
+
+  }
 
   const hi = (e) =>{
     const {name , value } = e.target ;
@@ -20,8 +33,23 @@ const Contact = () => {
   // on submit
 
   const hs = async (e) =>{
-    e.preventDefault()
-    console.log(formdata);
+    e.preventDefault();
+    try {
+         const api = "http://localhost:1056/contact"
+    const res = await axios.post(api , formdata);
+    if(res.status === 200){
+      console.log("Data saved Sucessfullly " , res.data);
+      
+    }
+    else{
+      console.log("internal sever error");
+      
+    }
+
+    } catch (error) {
+      console.error("Error from contact form" , error);
+      
+    }
     
     
   }
