@@ -10,6 +10,7 @@ import Navbar from './Components/Navbar'
 import Errorpage from './pages/Errorpage'
 import Logout from './Components/Logout'
 const App = () => {
+  
   return (
     <>
    <BrowserRouter>
