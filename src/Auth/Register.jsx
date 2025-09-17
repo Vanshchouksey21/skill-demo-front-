@@ -12,7 +12,7 @@ const Register = () => {
     email:"",
     phone:"",
     password:""
-  });
+  })
 
   const hi = async(e) =>{
     // console.log(e);
